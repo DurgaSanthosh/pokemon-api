@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PokemonTable from './components/PokemonTable';
+import PokemonForm from './components/PokemonForm';
+import Navbar from './components/Navbar';
+import PokemonDetails from './components/PokemonDetails';
+
 import './App.css';
 
 function App() {
+  const [pokemons, setPokemons] = useState([]);
+
+  const handleAdd = (pokemon) => {
+    setPokemons([...pokemons, pokemon]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+      <Route path="/" element={<PokemonTable />} />
+      <Route path="/add-pokemon" element={<PokemonForm classname = "form" onSubmit={handleAdd} />} />
+      <Route path="/details/:url" element={<PokemonDetails />} />
+      </Routes>
+    </Router>
   );
 }
 
